@@ -1,0 +1,21 @@
+.AnswerItem {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 6px 10px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    transition: all .2s ease-out;
+}
+
+
+.AnswerItem:hover {
+    background: #fff;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+}
+
+.AnswerItem.success {
+    background: rgb(62, 175, 62, .8);
+}
+.AnswerItem.error {
+    background: rgb(199, 89, 89, .8);
+}
