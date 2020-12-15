@@ -8,7 +8,7 @@ const AnswerItem = ({
 }) => {
     return (
         <li 
-            className={`AnswerItem ${answerState && answerState}`}
+            className={`AnswerItem ${answerState ? answerState : ''}`}
             onClick={() => onAnswerClick(answer.id)}
         >
             {answer.text}

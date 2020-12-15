@@ -16,7 +16,7 @@ export default function ActiveQuiz({
         <div className="activeQuiz">
             <p className="question">
                 <span>
-                    <strong>1. </strong>
+                    <strong>{answerNumber}. </strong>
                     {question}
                 </span>
 

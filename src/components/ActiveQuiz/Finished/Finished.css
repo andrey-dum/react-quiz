@@ -1,0 +1,42 @@
+.finished {
+    padding: 20px;
+    background: #f2f2f2;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin: 0 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .2);
+}
+
+.finished ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.finished li {
+    padding: 5px 10px;
+    border-radius: 5px;
+
+}
+.finished li i.success {
+    color: rgb(104, 193, 104, .8);
+}
+.finished li i.error {
+    color: rgb(230, 123, 123, .8);
+}
+.finished ul li i {
+    margin-left: 10px;
+}
+
+.finished button {
+    border: none;
+    padding: 7px 20px;
+    background-color: rgb(114, 154, 214);
+    color: #ffffff;
+    letter-spacing: 1px;
+    border-radius: 5px;
+    transition: all .2s;
+}
+.finished button:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, .13);
+}
