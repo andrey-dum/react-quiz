@@ -27,16 +27,3 @@
     margin-left: 10px;
 }
 
-.finished button {
-    border: none;
-    padding: 7px 20px;
-    background-color: rgb(114, 154, 214);
-    color: #ffffff;
-    letter-spacing: 1px;
-    border-radius: 5px;
-    transition: all .2s;
-}
-.finished button:hover {
-    cursor: pointer;
-    box-shadow: 0 4px 6px 0 rgba(0, 0, 0, .13);
-}

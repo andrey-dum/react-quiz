@@ -1,6 +1,6 @@
 import React from 'react'
 import ActiveQuiz from '../../components/ActiveQuiz/ActiveQuiz'
-import Finished from '../../components/ActiveQuiz/Finished/Finished'
+import Finished from '../../components/Finished/Finished'
 
 import './Quiz.css'
 
@@ -78,7 +78,6 @@ function Quiz() {
                         activeQuestion: state.activeQuestion + 1,
                         answerState: null
                     })
-
                 }
 
                 window.clearTimeout(timeout)
@@ -95,7 +94,6 @@ function Quiz() {
             })
         }
     }
-    console.log(state);
 
     const retryHandler = () => {
         setState({

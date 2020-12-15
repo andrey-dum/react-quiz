@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from '../UI/Button/Button'
 import './Finished.css'
 
 
@@ -36,7 +37,8 @@ export default function Finished({results, quiz, onRetry}) {
             <p>Правильно {successCount} из {quiz.length}</p>
 
             <div>
-                <button onClick={onRetry}>Повторить</button>
+                <Button onClick={onRetry} type="primary">Повторить</Button>
+                <Button type="success">Перейти в список тестов</Button>
             </div>
         </div>
     )
