@@ -4,6 +4,7 @@ import classes from './QuizCreator.module.css'
 import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
 import { createControl } from '../../form/formFramework'
+import Select from '../../components/UI/Select/Select'
 
 function createOptionControl(number) {
     return createControl({
@@ -29,6 +30,7 @@ function createFromControls() {
 export default function QuizCreator() {
     const [formState, setFormState] = React.useState({
         quiz: [],
+        rightAnswerId: 1,
         formControls: createFromControls()
 
     })
@@ -39,7 +41,7 @@ export default function QuizCreator() {
         e.preventDefault()
     }
 
-    const AddQuestionHandler = () => {
+    const addQuestionHandler = () => {
        
     }
 
@@ -50,13 +52,14 @@ export default function QuizCreator() {
     const changeHandler = (value, controlName) => {
 
     }
+   
 
     const renderControls = () => {
         return Object.keys(formState.formControls).map((controlName, index) => {
             const control = formState.formControls[controlName]
 
             return (
-                <>
+               
                     <Input
                         key={controlName + index}
                         label={control.label}
@@ -67,11 +70,31 @@ export default function QuizCreator() {
                         errorMessage={control.errorMessage}
                         onChange={event => changeHandler(event.target.value, controlName)}
                     />
-                    { index === 0 ? <hr /> : null }
-                </>
+                    // { index === 0 ? <hr /> : null }
+               
             )
         })
     }
+
+    const selectChangeHandler = (event) => {
+        console.log(event.target.value);
+        setFormState({
+            ...formState,
+            rightAnswerId: +event.target.value
+        })
+    }
+
+    const select = <Select
+        label="Выберите правильный ответ"
+        value={formState.rightAnswerId}
+        onChange={selectChangeHandler}
+        options={[
+            {text: 1, value: 1},
+            {text: 2, value: 2},
+            {text: 3, value: 3},
+            {text: 4, value: 4}
+        ]}
+    />
 
     return (
         <div className={classes.QuizCreator}>
@@ -79,22 +102,23 @@ export default function QuizCreator() {
                 <h1>QuizCreator</h1>
                 <form onSubmit={submitHandler} className={classes.QuizCreatorForm}>
 
-                { renderControls() }
+                    { renderControls() }
 
-                <select></select>
-                <Button
-                    type="primary"
-                    onClick={AddQuestionHandler}
-                
-                >
-                    Добавить вопрос
-                </Button>
-                <Button
-                    type="success"
-                    onClick={createQuizHandler}
-                >
-                    Создать тест
-                </Button>
+                    { select }
+
+                    <Button
+                        type="primary"
+                        onClick={addQuestionHandler}
+                    
+                    >
+                        Добавить вопрос
+                    </Button>
+                    <Button
+                        type="success"
+                        onClick={createQuizHandler}
+                    >
+                        Создать тест
+                    </Button>
                 </form>
             </div>
         </div>
