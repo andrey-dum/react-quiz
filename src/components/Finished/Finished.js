@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 import Button from '../UI/Button/Button'
 import './Finished.css'
 
-
-
 export default function Finished({results, quiz, onRetry}) {
     const successCount = Object.keys(results).reduce((total, key) => {
         if (results[key] === 'success') {
