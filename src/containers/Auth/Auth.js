@@ -11,6 +11,7 @@ function validateEmail(email) {
 
 function Auth() {
     const [formState, setFormState] = React.useState({
+        isFromValid: false,
         formControls: {
             email: {
                 value: '',
@@ -83,8 +84,15 @@ function Auth() {
 
         formControls[controlName] = control
 
+        let isFormValid = true
+
+        Object.keys(formControls).forEach(name => {
+            isFormValid = formControls[name].valid && isFormValid
+        })
+
         setFormState({
             formControls,
+            isFormValid
         })
     }
     
@@ -121,6 +129,7 @@ function Auth() {
                     <Button 
                         type="success" 
                         onClick={loginHandler}
+                        disabled={!formState.isFormValid}
                     >
                         Войти
                     </Button>
@@ -128,6 +137,7 @@ function Auth() {
                     <Button
                         type="primary" 
                         onClick={registerHandler}
+                        disabled={!formState.isFormValid}
                     >
                         Регистрация
                     </Button>
