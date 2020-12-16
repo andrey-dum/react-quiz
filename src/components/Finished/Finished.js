@@ -1,6 +1,8 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import Button from '../UI/Button/Button'
 import './Finished.css'
+
 
 
 export default function Finished({results, quiz, onRetry}) {
@@ -38,7 +40,9 @@ export default function Finished({results, quiz, onRetry}) {
 
             <div>
                 <Button onClick={onRetry} type="primary">Повторить</Button>
-                <Button type="success">Перейти в список тестов</Button>
+                <Link to="/">
+                    <Button type="success">Перейти в список тестов</Button>
+                </Link>
             </div>
         </div>
     )
