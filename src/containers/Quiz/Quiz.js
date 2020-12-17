@@ -1,6 +1,8 @@
 import React from 'react'
+import axios from '../../axios/axios-quiz'
 import ActiveQuiz from '../../components/ActiveQuiz/ActiveQuiz'
 import Finished from '../../components/Finished/Finished'
+import Loader from '../../components/UI/Loader/Loader'
 
 import './Quiz.css'
 
@@ -35,13 +37,36 @@ const quizList = {
     ]
 }
 
-function Quiz() {
+
+
+function Quiz({match}) {
 
     const [state, setState] = React.useState(quizList)
+    // const [quiz, setQuiz] = React.useState(null)
+    const [loading, setLoading] = React.useState(true)
 
     const isQuizFinished = () => {
         return state.activeQuestion + 1 === state.quiz.length
     }
+
+    const getQuiz = React.useCallback( async () => {
+        try {
+            const response = await axios.get(`/quizes/${match.params.id}.json`)
+            const quiz = response.data
+            setState({
+                ...state,
+                quiz: quiz
+            })
+            // setQuiz(response.data)
+            setLoading(false)
+        } catch (error) {
+            console.log(error);
+        }
+    }, [match.params.id])
+
+    React.useEffect(() => {
+        getQuiz()
+    }, [getQuiz])
 
     const onAnswerClickHandler = (answerId) => {
         if (state.answerState) {
@@ -110,7 +135,11 @@ function Quiz() {
            
             <div className="quiz__block">
                 <h1>Quiz Planet</h1>
-                { state.isFinished 
+
+                {
+                    loading 
+                    ? <Loader /> 
+                    : state.isFinished 
                     ? <Finished
                         results={state.results}
                         quiz={state.quiz}
@@ -125,6 +154,7 @@ function Quiz() {
                         answerState={state.answerState}
                     />
                 }
+
                 
             </div>
         </div>

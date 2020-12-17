@@ -1,9 +1,8 @@
 import React from 'react'
-import axios from 'axios'
+import axios from '../../axios/axios-quiz'
 import { NavLink } from 'react-router-dom'
 
 import './QuizList.css'
-import { FIREBASE_BD } from '../../db'
 import Loader from '../../components/UI/Loader/Loader'
 
 export default function QuizList() {
@@ -12,7 +11,7 @@ export default function QuizList() {
     const [loading, setLoading] = React.useState(true)
 
     React.useEffect(() => {
-        axios.get(FIREBASE_BD)
+        axios.get('/quizes.json')
         .then(response => {
             const quizList = []
             Object.keys(response.data).forEach((key, index) => {

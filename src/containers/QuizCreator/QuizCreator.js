@@ -5,8 +5,8 @@ import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
 import { createControl, validate, validateForm } from '../../form/formFramework'
 import Select from '../../components/UI/Select/Select'
-import axios from 'axios'
-import { FIREBASE_BD } from '../../db'
+import axios from '../../axios/axios-quiz'
+
 
 function createOptionControl(number) {
     return createControl({
@@ -87,7 +87,7 @@ export default function QuizCreator() {
         //     .catch(error => console.log(error))
 
         try {
-            await axios.post(FIREBASE_BD, formState.quiz)
+            await axios.post('/quizes.json', formState.quiz)
             setFormState({
                 ...formState,
                 quiz: [],
