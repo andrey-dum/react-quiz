@@ -91,6 +91,7 @@ function Auth() {
         })
 
         setFormState({
+            ...formState,
             formControls,
             isFormValid
         })

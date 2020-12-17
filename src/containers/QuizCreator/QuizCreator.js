@@ -1,9 +1,9 @@
-import React from 'react'
+import React, {useState} from 'react'
 import classes from './QuizCreator.module.css'
 
 import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
-import { createControl } from '../../form/formFramework'
+import { createControl, validate, validateForm } from '../../form/formFramework'
 import Select from '../../components/UI/Select/Select'
 
 function createOptionControl(number) {
@@ -28,8 +28,9 @@ function createFromControls() {
 }
 
 export default function QuizCreator() {
-    const [formState, setFormState] = React.useState({
+    const [formState, setFormState] = useState({
         quiz: [],
+        isFormValid: false,
         rightAnswerId: 1,
         formControls: createFromControls()
 
@@ -41,15 +42,60 @@ export default function QuizCreator() {
         e.preventDefault()
     }
 
-    const addQuestionHandler = () => {
-       
+    const addQuestionHandler = (e) => {
+        e.preventDefault()
+
+        const quiz = formState.quiz
+        const index = quiz.length + 1
+
+        const {question, option1, option2, option3, option4} = formState.formControls
+
+        const questionItem = {
+            question: question.value,
+            id: index,
+            rightAnswerId: formState.rightAnswerId,
+            answers: [
+                {text: option1.value, id: option1.id},
+                {text: option2.value, id: option2.id},
+                {text: option3.value, id: option3.id},
+                {text: option4.value, id: option4.id}
+            ]
+        }
+
+        quiz.push(questionItem)
+
+        setFormState({
+            ...formState,
+            quiz,
+            isFormValid: false,
+            rightAnswerId: 1,
+            formControls: createFromControls()
+        })
+
+
     }
 
-    const createQuizHandler = () => {
-       
+    const createQuizHandler = (e) => {
+        e.preventDefault()
+        console.log(formState.quiz);
     }
 
     const changeHandler = (value, controlName) => {
+        const formControls = {...formState.formControls}
+        const control = {...formControls[controlName]}
+
+        control.value = value
+        control.touched = true
+        control.valid = validate(control.value, control.validation)
+
+        formControls[controlName] = control
+
+        setFormState({
+            ...formState,
+            formControls,
+            isFormValid: validateForm(formControls)
+        })
+
 
     }
    
@@ -109,6 +155,7 @@ export default function QuizCreator() {
                     <Button
                         type="primary"
                         onClick={addQuestionHandler}
+                        disabled={!formState.isFormValid}
                     
                     >
                         Добавить вопрос
@@ -116,6 +163,7 @@ export default function QuizCreator() {
                     <Button
                         type="success"
                         onClick={createQuizHandler}
+                        disabled={formState.quiz.length === 0}
                     >
                         Создать тест
                     </Button>
