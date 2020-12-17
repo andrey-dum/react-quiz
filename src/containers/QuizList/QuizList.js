@@ -4,10 +4,12 @@ import { NavLink } from 'react-router-dom'
 
 import './QuizList.css'
 import { FIREBASE_BD } from '../../db'
+import Loader from '../../components/UI/Loader/Loader'
 
 export default function QuizList() {
 
     const [quizes, setQuizes] = React.useState([])
+    const [loading, setLoading] = React.useState(true)
 
     React.useEffect(() => {
         axios.get(FIREBASE_BD)
@@ -21,7 +23,7 @@ export default function QuizList() {
             })
 
             setQuizes(quizList)
-
+            setLoading(false)
         })
         .catch(e => console.log(e)) 
 
@@ -45,10 +47,13 @@ export default function QuizList() {
         <div className="QuizList">
             <div className="QuizList__block">
                 <h1>Список тестов</h1>
-
-                <ul>
-                    { renderQuizes() }
-                </ul>
+                { loading 
+                    ? <Loader />
+                    : <ul>
+                            { renderQuizes() }
+                        </ul>
+                }
+                
             </div>
             
         </div>
