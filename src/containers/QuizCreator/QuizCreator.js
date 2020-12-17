@@ -5,6 +5,8 @@ import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
 import { createControl, validate, validateForm } from '../../form/formFramework'
 import Select from '../../components/UI/Select/Select'
+import axios from 'axios'
+import { FIREBASE_BD } from '../../db'
 
 function createOptionControl(number) {
     return createControl({
@@ -75,9 +77,27 @@ export default function QuizCreator() {
 
     }
 
-    const createQuizHandler = (e) => {
+    const createQuizHandler = async (e) => {
         e.preventDefault()
-        console.log(formState.quiz);
+      
+        // axios.post('https://react-quiz-1bf15-default-rtdb.firebaseio.com/quizes.json', formState.quiz)
+        //     .then(response => {
+        //         console.log(response);
+        //     })
+        //     .catch(error => console.log(error))
+
+        try {
+            await axios.post(FIREBASE_BD, formState.quiz)
+            setFormState({
+                ...formState,
+                quiz: [],
+                isFormValid: false,
+                rightAnswerId: 1,
+                formControls: createFromControls()
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const changeHandler = (value, controlName) => {
