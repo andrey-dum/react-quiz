@@ -26,7 +26,7 @@ export default function QuizList() {
         })
         .catch(e => console.log(e)) 
 
-    }, [quizes])
+    }, [])
 
     const renderQuizes = () => {
         return quizes.map((quiz) => (
