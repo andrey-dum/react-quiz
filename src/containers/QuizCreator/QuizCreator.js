@@ -52,9 +52,6 @@ export default function QuizCreator() {
     const addQuestionHandler = (e) => {
         e.preventDefault()
 
-        // const quiz = state.quiz.concat()
-        // const index = quiz.length + 1
-
         const {question, option1, option2, option3, option4} = formState.formControls
 
         const questionItem = {
@@ -98,21 +95,6 @@ export default function QuizCreator() {
             })
        
     }
-    // const createQuizHandler = async (e) => {
-    //     e.preventDefault()
-    //     try {
-    //         await axios.post('/quizes.json', formState.quiz)
-    //         setFormState({
-    //             ...formState,
-    //             quiz: [],
-    //             isFormValid: false,
-    //             rightAnswerId: 1,
-    //             formControls: createFromControls()
-    //         })
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
 
     const changeHandler = (value, controlName) => {
         const formControls = {...formState.formControls}
@@ -157,7 +139,6 @@ export default function QuizCreator() {
     }
 
     const selectChangeHandler = (event) => {
-        console.log(event.target.value);
         setFormState({
             ...formState,
             rightAnswerId: +event.target.value

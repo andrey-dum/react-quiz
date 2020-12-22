@@ -1,9 +1,11 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import './Auth.css'
 import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
-import axios from 'axios'
-import { API_KEY } from '../../db'
+// import axios from 'axios'
+// import { API_KEY } from '../../db'
+import { auth } from '../../store/actions/auth'
 
 function validateEmail(email) {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -12,6 +14,9 @@ function validateEmail(email) {
 
 
 function Auth() {
+    const dispatch = useDispatch()
+    const token = useSelector(state => state.auth.token)
+
     const [formState, setFormState] = React.useState({
         isFromValid: false,
         formControls: {
@@ -42,35 +47,23 @@ function Auth() {
         }
     })
 
-    const loginHandler = async () => {
-        const authData = {
-            email: formState.formControls.email.value,
-            password: formState.formControls.password.value,
-            returnSecureToken: true
-        }
-        try {
-            const response = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`, authData)
-            console.log(response.data);
-        } catch (error) {
-            console.log(error);
-        } 
+    const loginHandler = () => {
+        dispatch(auth(
+            formState.formControls.email.value,
+            formState.formControls.password.value,
+            true
+            
+        ))
     }
-console.log(formState.formControls.email.value);
-console.log(formState.formControls.password.value);
-    const registerHandler = async () => {
-        const authData = {
-            email: formState.formControls.email.value,
-            password: formState.formControls.password.value,
-            returnSecureToken: true
-        }
-        try {
-            const response = await axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`, authData)
+
+
+    const registerHandler = () => {
+        dispatch(auth(
+            formState.formControls.email.value,
+            formState.formControls.password.value,
+            false
             
-            console.log(response.data);
-            
-        } catch (error) {
-            console.log(error);
-        }
+        ))
     }
 
     const submitHandler = (e) => {
