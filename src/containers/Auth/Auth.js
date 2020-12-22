@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import './Auth.css'
 import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
@@ -15,8 +15,7 @@ function validateEmail(email) {
 
 function Auth() {
     const dispatch = useDispatch()
-    const token = useSelector(state => state.auth.token)
-
+    
     const [formState, setFormState] = React.useState({
         isFromValid: false,
         formControls: {
