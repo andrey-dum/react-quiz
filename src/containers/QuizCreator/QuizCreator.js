@@ -1,11 +1,14 @@
 import React, {useState} from 'react'
 import classes from './QuizCreator.module.css'
 
+import { useDispatch, useSelector } from 'react-redux'
+
 import Button from '../../components/UI/Button/Button'
 import Input from '../../components/UI/Input/Input'
 import { createControl, validate, validateForm } from '../../form/formFramework'
 import Select from '../../components/UI/Select/Select'
-import axios from '../../axios/axios-quiz'
+import { createQuizQuestion, finishCreateQuiz } from '../../store/actions/create'
+
 
 
 function createOptionControl(number) {
@@ -30,15 +33,17 @@ function createFromControls() {
 }
 
 export default function QuizCreator() {
+
+    const dispatch = useDispatch()
+    const state = useSelector(state => state.create)
+
     const [formState, setFormState] = useState({
-        quiz: [],
+        // quiz: [],
         isFormValid: false,
         rightAnswerId: 1,
         formControls: createFromControls()
 
     })
-
-    
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -47,14 +52,14 @@ export default function QuizCreator() {
     const addQuestionHandler = (e) => {
         e.preventDefault()
 
-        const quiz = formState.quiz
-        const index = quiz.length + 1
+        // const quiz = state.quiz.concat()
+        // const index = quiz.length + 1
 
         const {question, option1, option2, option3, option4} = formState.formControls
 
         const questionItem = {
             question: question.value,
-            id: index,
+            id: state.quiz.length + 1,
             rightAnswerId: formState.rightAnswerId,
             answers: [
                 {text: option1.value, id: option1.id},
@@ -64,11 +69,13 @@ export default function QuizCreator() {
             ]
         }
 
-        quiz.push(questionItem)
+        // quiz.push(questionItem)
+
+        dispatch(createQuizQuestion(questionItem))
 
         setFormState({
             ...formState,
-            quiz,
+            // quiz,
             isFormValid: false,
             rightAnswerId: 1,
             formControls: createFromControls()
@@ -77,28 +84,35 @@ export default function QuizCreator() {
 
     }
 
-    const createQuizHandler = async (e) => {
+    const createQuizHandler = (e) => {
         e.preventDefault()
-      
-        // axios.post('https://react-quiz-1bf15-default-rtdb.firebaseio.com/quizes.json', formState.quiz)
-        //     .then(response => {
-        //         console.log(response);
-        //     })
-        //     .catch(error => console.log(error))
+       
+           dispatch(finishCreateQuiz())
 
-        try {
-            await axios.post('/quizes.json', formState.quiz)
             setFormState({
                 ...formState,
-                quiz: [],
+                // quiz: [],
                 isFormValid: false,
                 rightAnswerId: 1,
                 formControls: createFromControls()
             })
-        } catch (error) {
-            console.log(error)
-        }
+       
     }
+    // const createQuizHandler = async (e) => {
+    //     e.preventDefault()
+    //     try {
+    //         await axios.post('/quizes.json', formState.quiz)
+    //         setFormState({
+    //             ...formState,
+    //             quiz: [],
+    //             isFormValid: false,
+    //             rightAnswerId: 1,
+    //             formControls: createFromControls()
+    //         })
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
     const changeHandler = (value, controlName) => {
         const formControls = {...formState.formControls}
@@ -183,7 +197,7 @@ export default function QuizCreator() {
                     <Button
                         type="success"
                         onClick={createQuizHandler}
-                        disabled={formState.quiz.length === 0}
+                        disabled={state.quiz.length === 0}
                     >
                         Создать тест
                     </Button>
