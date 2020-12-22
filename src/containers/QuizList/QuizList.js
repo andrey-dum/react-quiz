@@ -36,12 +36,12 @@ export default function QuizList() {
 
     const quizes = state.quizes
     const loading = state.loading
-
+    
     const renderQuizes = () => {
         return quizes.map((quiz) => (
             <li 
                 key={quiz.id}
-            >
+            > 
                 <NavLink
                     to={`/quiz/${quiz.id}`}
                 >
