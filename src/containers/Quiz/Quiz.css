@@ -10,7 +10,7 @@
 }
 
 .quiz__block {
-    width: 600px;
+    max-width: 600px;
 }
 
 .quiz h1 {
